@@ -6,6 +6,7 @@ ROOT=$(realpath $(dirname $BASH_SOURCE)/..)
 
 cd $ROOT
 
+CMDS="build|up|down|shell|repl"
 run() {
   case "$1" in
     build)
@@ -29,7 +30,24 @@ run() {
     shell)
       docker exec -it coach /bin/bash 
       ;;
+    repl)
+      repl
+      ;;
+    *)
+      echo "Usage: $CMDS"
+      exit
+      ;;
   esac
+}
+
+repl() {
+  set +ex
+  while [ true ]
+  do
+    read -p "($CMDS): " cmd
+    $BASH_SOURCE $cmd
+  done
+  set -ex
 }
 
 build-images() {
