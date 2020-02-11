@@ -18,6 +18,8 @@ run() {
           --net host \
           -v /tmp/checkpoint:/checkpoint \
           --name coach \
+          -e DISPLAY=$DISPLAY \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
           coach:master \
           tail -f /dev/null
       ;;
